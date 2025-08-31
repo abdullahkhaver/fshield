@@ -1,13 +1,11 @@
 {
-  "name": "fshield.itkhaver.com",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "create-fshield-app",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "create-fshield-app": "./bin/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.15.0"
+  "scripts": {
+    "create": "node ./bin/index.js"
+  }
 }
