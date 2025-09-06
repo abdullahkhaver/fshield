@@ -6,9 +6,9 @@ import cookieParser from 'cookie-parser';
 import cors, { CorsOptionsDelegate } from 'cors';
 import morgan from 'morgan';
 import csrf from 'csurf';
-import { apiError } from './utils/apiError';
+import { ApiError } from './utils/apiError';
 import { errorHandler } from './middlewares/error.middleware';
-import { apiResponse } from './utils/apiResponse';
+import { ApiResponse } from './utils/apiResponse';
 
 const app = express();
 
@@ -20,8 +20,8 @@ app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
-  max: 200, // limit each IP
+  windowMs: 15 * 60 * 1000,
+  max: 200,
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -45,7 +45,7 @@ const corsOptions: CorsOptionsDelegate = (origin, callback) => {
 };
 app.use(cors({ origin: corsOptions, credentials: true }));
 
-// CSRF Protection
+// CSRF Protection (optional)
 const csrfProtection = csrf({
   cookie: {
     httpOnly: true,
@@ -54,24 +54,22 @@ const csrfProtection = csrf({
   },
 });
 
-// CSRF Token endpoint (SPA clients fetch this)
+// CSRF Token endpoint
 app.get('/api/csrf-token', csrfProtection, (req: Request, res: Response) => {
   res.json({ csrfToken: req.csrfToken() });
 });
 
 // Routes
 app.get('/api/healthcheck', (req: Request, res: Response) => {
-  throw new apiResponse(200, 'API is healthy');
+  return res.status(200).json(new ApiResponse(200, 'API is healthy'));
 });
-
-
 
 // 404 handler
 app.use((req: Request, _res: Response, next: NextFunction) => {
-  next(new apiError(404, 'Route not found'));
+  next(new ApiError(404, 'Route not found'));
 });
 
-// Global Error handler (for unhandled errors)
+// Global Error handler
 app.use(errorHandler);
 
 export default app;

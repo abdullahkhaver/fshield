@@ -15,7 +15,7 @@ export interface IapiResponse<T> {
 /**
  * Utility class for sending consistent API responses
  */
-export class apiResponse<T> implements IapiResponse<T> {
+export class ApiResponse<T> implements IapiResponse<T> {
   public readonly status: 'success' | 'fail';
   public readonly statusCode: number;
   public readonly message: string;
@@ -61,8 +61,8 @@ export class apiResponse<T> implements IapiResponse<T> {
     message = 'Request successful',
     statusCode = 200,
     meta?: Record<string, unknown>
-  ): apiResponse<T> {
-    return new apiResponse<T>(statusCode, message, { data, meta });
+  ): ApiResponse<T> {
+    return new ApiResponse<T>(statusCode, message, { data, meta });
   }
 
   /**
@@ -72,7 +72,7 @@ export class apiResponse<T> implements IapiResponse<T> {
     message: string,
     statusCode = 400,
     meta?: Record<string, unknown>
-  ): apiResponse<null> {
-    return new apiResponse<null>(statusCode, message, { data: null, meta });
+  ): ApiResponse<null> {
+    return new ApiResponse<null>(statusCode, message, { data: null, meta });
   }
 }

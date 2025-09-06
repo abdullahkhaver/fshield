@@ -1,6 +1,5 @@
-# My Awesome API
-
-## 🚀 Getting Started
+# Built With FShield[httwww.gogle.com]
+## Getting Started
 ```bash
 pnpm install
 pnpm dev

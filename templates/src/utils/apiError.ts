@@ -14,7 +14,7 @@ export interface SubError {
  * Standard API Error class used across the application.
  * Inspired by patterns used in large-scale systems.
  */
-export class apiError extends Error {
+export class ApiError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;
   public readonly details?: unknown;
@@ -47,8 +47,8 @@ export class apiError extends Error {
   /**
    * Factory method for validation errors.
    */
-  static validationError(errors: SubError[]): apiError {
-    return new apiError(400, 'Validation Error', {
+  static validationError(errors: SubError[]): ApiError {
+    return new ApiError(400, 'Validation Error', {
       subErrors: errors,
     });
   }
